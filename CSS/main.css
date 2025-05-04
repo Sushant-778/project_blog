@@ -30,12 +30,12 @@
 }
 @layer components{
     .tools{
-        @apply w-7  p-1.5  rounded-sm bg-gray-400 hover:bg-[#6495EDe5] flex justify-center items-center 
+        @apply w-7  p-1.5  rounded-sm bg-gray-400 hover:bg-[#6495ED] flex justify-center items-center 
         
     }
     .m-d-buttons{
         @apply w-full h-8 p-2 rounded-sm text-black  text-xs
-         bg-gray-400  hover:bg-[#6495EDe5] flex justify-start items-center gap-2
+         bg-gray-400  hover:bg-[#6495ED] flex justify-start items-center gap-2
         
     }
     .m-d-buttons > img{
