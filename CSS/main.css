@@ -41,7 +41,7 @@
     .m-d-buttons > img{
         @apply h-full
     }
-}
+
 .trending-section{
     display: grid;
     grid-template-areas: 
@@ -69,4 +69,5 @@
 }
  .trending-grid-item6{
     grid-area:six
+}
 }
