@@ -42,7 +42,7 @@
     <!-- Navigation Bar -->
     <nav class="w-full pt-4 flex justify-between">
       <span href="" class="text-heading-text font-raleway"
-        >Blogging What Echoes.</span
+        >Blogging What <span class=" border-b-4 border-cornflowerblue ">Echoes.</span></span
       >
       <div class="flex justify-between gap-8 text-normal-text">
         <a
@@ -57,9 +57,28 @@
           href=""
           class="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out"
           >Trending</a>
-        <button class="rounded-[50%] w-8 h-8 text-black cursor-pointer">
-          <img src="/Images/icons8-male-user-100.png" alt="Account">
-
+        <div class="relative inline-block">
+         
+            <button
+              class="rounded-[50%] w-8 h-8 text-black cursor-pointer"
+              onclick="document.getElementById('dropdown').classList.toggle('hidden')"
+            >
+              <img src="/Images/icons8-male-user-100.png" alt="Accounts">
+            </button>
+          
+            <div
+              id="dropdown"
+              class="w-50 bg-[#38383e] text-white shadow-soft rounded-sm absolute -left-3/2 -translate-x-1/2  hidden z-10"
+            >
+              <div class="p-2 space-y-2">
+                <h2 class="text-base text-center font-semibold">Accounts</h2>
+                <hr>
+                <button class="w-full p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">Add a different account</button>
+                <button class="w-full p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">Sign out</button>
+              </div>
+            </div>
+          </div>
+          
         </button>  
       </div>
     </nav>
@@ -85,7 +104,7 @@
           Write your own article !
         </span>
         <a
-          class="w-full p-1 rounded-xs no-underline text-sm text-gray-200 bg-dim-text hover:bg-[cornflowerblue] hover:text-section-color flex justify-center items-center"
+          class="w-full p-1 rounded-xs no-underline text-sm text-gray-200 shadow-soft-1 hover:bg-[cornflowerblue] hover:text-section-color flex justify-center items-center"
           href="/HTML/create.html"
           >Create a Blog</a
         >
