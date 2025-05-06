@@ -1,24 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fixed Footer Test</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   
+    <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<!-- CSS Links -->
+    <link href="/CSS/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="/CSS/main.css">
+
+    <title>Blog:</title>
 </head>
-<body class="m-0 p-0 bg-gray-100 text-black">
-<main class="min-h-screen">
 
-    <div class="min-h-screen flex-grow pb-2 px-4">
-        <h1 class="text-3xl font-bold mt-8">Page Content</h1>
-        <p class="mt-4">Lots of content goes here...</p>
-        <div class="h-[150px] bg-gray-200 mt-4">Simulated long content</div>
-    </div>
-    
-    <footer class=" w-full bg-gray-800 text-white p-4 text-center z-50">
-        Fixed Footer Content
-    </footer>
-</main>
-
+<body  class="m-0 p-0  bg-background flex flex-col items-center  gap-y-8 w-[90dvw] mx-auto min-h-screen">  
+    <nav class="
+    w-full pt-4 flex justify-between ">
+    <div class=" py-0 px-3 border-r-6  border-r-cornflowerblue flex justify-center">
+        <a href="/HTML/main.html" class="text-heading-text font-gothic font-extrabold text-3xl leading-6 space-x-5 ">
+            <span>BT <br> SX</span></a>
+        </div>
+      
+        <div  class=" h-[50%] flex justify-between gap-8 font-raleway font-semibold text-sm text-normal-text ">  
+            <a href="/HTML/main.html" class="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out ">Home</a>
+            <a href="" class="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">Latest</a>
+            <a href="" class="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">Trending</a>
+        </div>
+    </nav>
+   
+ 
+    <main class="">
+    <article class="w-[60dvw] flex flex-col justify-center ">
+       
+        <h1 class="font-raleway text-3xl font-bold text-heading-text leading-8 mb-1">
+            Neural Notes: Decoding the Future of Intelligence <br>
+            
+        </h1>
+        <div class="text-xs font-extralight mb-2 text-dim-text">- John Human</div>
+        <div>
+            <p class="mb-1 h-8 text-dim-text text-xs overflow-hidden">
+                From artificial intelligence breakthroughs to the ethics of machine learning, Neural Notes dives deep into the evolving landscape of smart technologies. Discover how algorithms, neural networks, and data science are transforming industries and shaping human potential — one byte at a time.
+            </p>
+        </div>
+    </article>
+    </main>
+   
 </body>
 </html>
