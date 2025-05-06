@@ -37,7 +37,7 @@
   <body
     class="m-0 p-0 bg-background flex flex-col justify-between items-center gap-y-16 w-[90dvw] min-h-screen mx-auto"
   >
-    <!-- <dotlottie-player class="absolute -top-50 -left-50 opacity-50 -z-100"src="https://lottie.host/3f305b38-c765-4b6a-bb11-fd99abef83d2/NSPzaXwXX1.lottie" background="transparent" speed="0.4" style="width: 800px; height: 800px" loop autoplay></dotlottie-player> -->
+    <dotlottie-player class="absolute -top-50 -left-50 opacity-50 -z-100"src="https://lottie.host/3f305b38-c765-4b6a-bb11-fd99abef83d2/NSPzaXwXX1.lottie" background="transparent" speed="0.4" style="width: 800px; height: 800px" loop autoplay></dotlottie-player>
 
     <!-- Navigation Bar -->
     <nav class="w-full pt-4 flex justify-between">
@@ -101,10 +101,9 @@
         <img src="/Images/icons8-create-100.png" alt="" class="w-8" />
         <span class="text-xs text-gray-300">
           Share your thoughts... <br />
-          Write your own article !
         </span>
         <a
-          class="w-full p-1 rounded-xs no-underline text-sm text-gray-200 shadow-soft-1 hover:bg-[cornflowerblue] hover:text-section-color flex justify-center items-center"
+          class="w-full p-1 rounded-xs no-underline text-sm text-gray-200 font-raleway shadow-soft-1 hover:bg-[cornflowerblue] hover:text-section-color flex justify-center items-center"
           href="/HTML/create.html"
           >Create a Blog</a
         >
@@ -113,12 +112,16 @@
 
     <!-- Most Liked Section -->
     <section
-      class="w-full h-100 p-2 rounded-sm text-heading-text  flex items-center justify-between gap-2 "
-    >
-      <div class="w-[60%] h-full  p-2 rounded-md bg-gradient-to-r from-[#3e3f43] to-[#292b2b] shadow-soft  flex flex-col trending-grid-item1 ">
+      class="w-full h-100  rounded-sm text-heading-text  flex items-center justify-between gap-2  relative"
+    >  <div class="absolute -left-19 top-7 bg-[#3b3b3f] shadow-soft  p-2 font-raleway rounded-sm rotate-[-90deg]
+                   border-b-4 border-b-cornflowerblue ">
+            Most Liked
+        </div>
+      <div class="w-[60%] h-full  p-2 rounded-md shadow-soft  flex flex-col trending-grid-item1 ">
         <div
         class="p-2 h-full w-full rounded-md bg-gradient-to-r from-[#3e3f43] to-[#292b2b] flex flex-col  hover:shadow-soft-hover transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out "
       >
+        
         <div class="w-auto h-auto flex flex-col" x>
           <div class="text-[0.6rem] text-dim-text">1-1-2025</div>
           <div class="font-raleway text-lg font-bold leading-5 mb-1">
@@ -146,7 +149,7 @@
             <div class="bg-[#3b3b3f] h-full w-full grow rounded-xs transition delay-50 hover:-translate-y-0.5 hover:scale-101 ease-in-out">
                 <div class="w-auto h-auto p-2 flex flex-col">
                     <div class="text-[0.6rem] text-dim-text">1-1-2025</div>
-                    <div class="font-raleway text-md font-bold leading-5 mb-1">
+                    <div class="font-raleway text-lg font-bold leading-5 mb-1">
                         Beyond the Screen: Inside the Tech That Shapes Us
                     </div>
                     <div class="text-xs font-extralight ">- John Human</div>
@@ -188,9 +191,13 @@
     </div>
     </section>
 
+    <!-- Trending-section -->
     <section
-      class="trending-section text-heading-text w-full bg-transparent p-2 rounded-sm grid grid-cols-5 grid-rows-3 gap-4"
-    >
+      class="trending-section text-heading-text w-full bg-transparent p-2 rounded-sm grid grid-cols-5 grid-rows-3 gap-4 shadow-soft relative"
+        > <div class="absolute -left-17 top-5 bg-[#3b3b3f] shadow-soft  p-2 px-3 font-raleway rounded-sm rotate-[-90deg] 
+                      border-b-4 border-b-cornflowerblue">
+          Trending
+        </div>
       <div
         class="p-2 h-80 w-auto rounded-md bg-gradient-to-r from-[#3e3f43] to-[#292b2b] shadow-soft hover:shadow-soft-hover flex flex-col trending-grid-item1 transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out"
       >
