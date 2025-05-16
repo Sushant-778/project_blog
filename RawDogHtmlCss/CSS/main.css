@@ -21,8 +21,6 @@
 
    --shadow-soft-hover: 0 0 5px rgb(189, 182, 182);
 
-   
-
 }
 :root{
     font-size: 1rem;
@@ -55,6 +53,7 @@
     " five five five five six ";
     
 }
+background
 .trending-grid-item1{
     grid-area:one;
 }
