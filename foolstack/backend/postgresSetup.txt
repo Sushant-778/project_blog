@@ -1,0 +1,17 @@
+NOTE: {} -> variable, [] -> default
+
+// Install postgres
+set password and port (or leave default)
+// finish postgres setup
+
+// don't forget to add postgres/bin 's absolute path in enviroment variable's path
+
+to connect to default db
+-> psql -U {db user [postgres]} -p {port number [5432]}
+-> then enter your password
+
+
+// few postgres cmd:
+-> /l -> list all db
+-> /c {dbname} -> enter into specified database
+-> /dt -> show all tables
