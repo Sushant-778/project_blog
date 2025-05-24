@@ -1,12 +1,25 @@
 import express from "express";
 import cors from "cors";
 
+// for db
+import { initDatabase } from "../db/dbInit";
+import { seedingDatabase } from "../db/seed";
+import { viewAllDataFromDb } from "../db/dbDataView";
+
+(async ()=> { 
+	await initDatabase();
+	// test
+	// await seedingDatabase();
+	await viewAllDataFromDb();
+})()
+
+
 // routers
 import blogRouter from "./routes/blogs.router";
 import authRouter from './routes/auth.router';
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+const PORT = 8080;
 
 app.use(cors()); // cross origin resource sharing
 app.use(express.json()); // middleware req ko body linaa json ko format ma
