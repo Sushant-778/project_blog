@@ -21,8 +21,8 @@
     />
     <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
     <!-- CSS Links -->
-    <link href="/CSS/output.css" rel="stylesheet" />
-    <link rel="stylesheet" href="/CSS/main.css" />
+    <link href="/RawDogHtmlCss/CSS/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="/RawDogHtmlCss/CSS/main.css" />
 
     <!-- tailwind cdn -->
 
@@ -47,7 +47,7 @@
       >
       <div class="flex justify-between gap-8 text-normal-text">
         <a
-          href="/HTML/main.html"
+          href="HTML/main.html"
           class="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out"
           >Home</a>
         <a
@@ -64,18 +64,30 @@
               class="rounded-[50%] w-8 h-8 text-black cursor-pointer"
               onclick="document.getElementById('dropdown').classList.toggle('hidden')"
             >
-              <img src="/Images/icons8-male-user-100.png" alt="Accounts">
+              <img src="/RawDogHtmlCss/Images/icons8-male-user-100.png" alt="Accounts">
             </button>
           
             <div
               id="dropdown"
-              class="w-50 bg-[#38383e] text-white shadow-soft rounded-sm absolute -left-3/2 -translate-x-1/2  hidden z-10"
+              class="w-55 bg-[#38383e] text-white shadow-soft rounded-sm absolute -left-3/2 -translate-x-1/2  hidden z-10"
             >
               <div class="p-2 flex flex-col ">
                 <h2 class="text-base text-center font-semibold">Accounts</h2>
-                <hr>
-                <a href="/HTML/login.html" class="mt-2 p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">Add a different account</a>
-                <a href="/HTML/login.html" class=" p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">Sign out</a>
+                <hr class="text-dim-text mb-1">
+                <div class=" p-3 flex items-start gap-x-2 rounded-sm cursor-pointer hover:bg-[#47474f] " onclick="window.location.href='profile.html'">
+                   <img class="w-8" src="/RawDogHtmlCss/Images/icons8-male-user-100.png" alt="Accounts">
+                   
+                   <div class=" flex flex-col gap-y-0">
+                     <span class="text-sm ">Jhon Human</span>
+                      <span class="text-xs text-dim-text">#696969</span><!-- user id -->
+                      <span class="text-xs text-dim-text">jhonhuman001@gmail.com</span>
+                   </div>
+                  </div>
+                 
+                <!-- <hr class="text-dim-text"> -->
+
+                <a href="/HTML/login.html" class="mt-2 p-2 rounded-sm text-center text-xs border-1 border-dim-text hover:bg-section-color">Add a different account</a>
+                <a href="/HTML/login.html" class="mt-0.5 p-2 rounded-sm text-center text-xs hover:bg-cornflowerblue bg-[#6494edd5]">Sign out</a>
               </div>
             </div>
           </div>
@@ -99,7 +111,7 @@
       <div
         class="bg-[#3b3b3f] p-2 rounded-sm h-30 flex flex-col items-center justify-between shadow-cornflower"
       >
-        <img src="/Images/icons8-create-100.png" alt="" class="w-8" />
+        <img src="/RawDogHtmlCss/Images/icons8-create-100.png" alt="" class="w-8" />
         <span class="text-xs text-gray-300">
           Share your thoughts... <br />
         </span>
@@ -137,7 +149,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
@@ -216,7 +228,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
@@ -239,7 +251,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
@@ -265,7 +277,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
@@ -289,7 +301,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
@@ -313,7 +325,7 @@
         </div>
         <div class="overflow-hidden">
           <img
-            src="/Images/MilkyWay.webp"
+            src="/RawDogHtmlCss/Images/MilkyWay.webp"
             alt=""
             class="h-[100%] w-[100%] rounded-md"
           />
