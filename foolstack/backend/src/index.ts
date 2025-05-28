@@ -1,29 +1,36 @@
 import express from "express";
 import cors from "cors";
 
-// for db
-import { initDatabase } from "../db/dbInit";
-import { seedingDatabase } from "../db/seed";
-import { viewAllDataFromDb } from "../db/dbDataView";
+import { config } from "dotenv";
+config()
 
-(async ()=> { 
-	await initDatabase();
+
+// for db
+import {initDatabase} from "../db/dbInit";
+import {seedingDatabase} from "../db/seed";
+import {viewAllDataFromDb} from "../db/dbDataView";
+
+(async () => {
+	// await initDatabase();
 	// test
 	// await seedingDatabase();
-	await viewAllDataFromDb();
-})()
-
+	// await viewAllDataFromDb();
+})();
 
 // routers
 import blogRouter from "./routes/blogs.router";
-import authRouter from './routes/auth.router';
+import authRouter from "./routes/auth.router";
 
 const app = express();
 const PORT = 8080;
 
-app.use(cors()); // cross origin resource sharing
+app.use(
+	cors({
+		origin: "http://localhost:3000",
+		credentials: true,
+	})
+); // cross origin resource sharing
 app.use(express.json()); // middleware req ko body linaa json ko format ma
-
 
 // routes
 app.get("/", (_req, res) => {
@@ -32,13 +39,11 @@ app.get("/", (_req, res) => {
 
 app.use("/auth", authRouter);
 
-app.use ("/blogs", blogRouter);
-
+app.use("/blogs", blogRouter);
 
 app.listen(PORT, () => {
 	console.log(`Server is running on http://localhost:${PORT}`);
 });
-
 
 // for cockroach db. prolly won't use
 // cockroachdb pass = 8-P_3_4lZXnnM7XpYq_cdw

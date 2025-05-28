@@ -2,6 +2,7 @@ const createUserTableQuery = `
     CREATE TABLE IF NOT EXISTS users (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     username VARCHAR(100) NOT NULL,
+    user_img_src TEXT,
     email VARCHAR(100) NOT NULL UNIQUE,
     user_rating INTEGER DEFAULT 0
 );`;

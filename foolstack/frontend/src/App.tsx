@@ -7,6 +7,8 @@ import Login from "./Components/Login";
 import Header from "./Components/Header";
 
 import "./App.css";
+import {GoogleOAuthProvider} from "@react-oauth/google";
+import { UserProvider } from "./ContextProvider/UserContext";
 
 // for Pages with regular header
 const HeaderLayout = () => (
@@ -23,7 +25,7 @@ const router = createBrowserRouter([
 		element: <Hero />,
 	},
 	{
-		element: <HeaderLayout />, // Header included 
+		element: <HeaderLayout />, // Header included
 		children: [
 			{
 				path: "/create",
@@ -31,15 +33,19 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/login",
-				element: <Login />,
+				element: (
+					<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+						<Login />
+					</GoogleOAuthProvider>
+				),
 			},
 			{
 				path: "/posts",
-				element: <GeneralPost/>,
+				element: <GeneralPost />,
 				children: [
 					{
 						path: "trending",
-						element: <GeneralPost/>,
+						element: <GeneralPost />,
 					},
 				],
 			},
@@ -48,7 +54,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-	return <RouterProvider router={router} />;
+	return (
+		<UserProvider>
+			<RouterProvider router={router} />
+		</UserProvider>
+	);
 }
+
 
 export default App;

@@ -1,8 +1,10 @@
 type LinkKey = "Facebook" | "Github" | "Dev.to";
 
 export interface userI {
+    userId: string;
 	username: string;
 	email: string;
+    userImgSrc: string;
 	links: {
 		[key in LinkKey]?: string;
 	};
@@ -28,4 +30,18 @@ export interface blogI {
         replierName: string,
         replyMessage: string
     }>
+}
+
+export type GoogleDataType = {
+  id: string,
+  email: string,
+  verified_email: boolean,
+  name: string,
+  picture: string
+}
+
+export type ServerResponse<T> = {
+    status: number;
+    message: string;
+    data?: T;
 }
