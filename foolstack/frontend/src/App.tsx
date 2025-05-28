@@ -8,7 +8,8 @@ import Header from "./Components/Header";
 
 import "./App.css";
 import {GoogleOAuthProvider} from "@react-oauth/google";
-import { UserProvider } from "./ContextProvider/UserContext";
+import {UserProvider} from "./ContextProvider/UserContext";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 // for Pages with regular header
 const HeaderLayout = () => (
@@ -22,14 +23,22 @@ const router = createBrowserRouter([
 	{
 		path: "/",
 		loader: () => ({message: "Hello routing"}),
-		element: <Hero />,
+		element: (
+			<ProtectedRoute>
+				<Hero />
+			</ProtectedRoute>
+		),
 	},
 	{
 		element: <HeaderLayout />, // Header included
 		children: [
 			{
 				path: "/create",
-				element: <Create />,
+				element: (
+					<ProtectedRoute>
+						<Create />
+					</ProtectedRoute>
+				),
 			},
 			{
 				path: "/login",
@@ -41,11 +50,19 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "/posts",
-				element: <GeneralPost />,
+				element: (
+					<ProtectedRoute>
+						<GeneralPost />
+					</ProtectedRoute>
+				),
 				children: [
 					{
 						path: "trending",
-						element: <GeneralPost />,
+						element: (
+							<ProtectedRoute>
+								<GeneralPost />
+							</ProtectedRoute>
+						),
 					},
 				],
 			},
@@ -60,6 +77,5 @@ function App() {
 		</UserProvider>
 	);
 }
-
 
 export default App;
