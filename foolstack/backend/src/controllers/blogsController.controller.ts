@@ -1,14 +1,14 @@
 import {Request, Response} from "express";
-import {CreateBlogI, ServerResponse} from "../interfaces";
+import {CreateBlogI, IndividualBlogI, ServerResponse} from "../interfaces";
 import {uploadBlogCoverImgFile} from "../../db/photoUpload";
-import {createBlogExec} from "../../db/dbBlogQueries";
+import {createBlogExec, createCommentExec, getIndividualBlogExec} from "../../db/dbBlogQueries";
 
 export const createBlog = async (
 	req: Request<{}, {}, CreateBlogI>,
-	res: Response<ServerResponse<null>>
+	res: Response<ServerResponse<{blogId: string}>>
 ) => {
 	const {author_id, author_name, title, description} = req.body;
-    // console.log(description)
+	// console.log(description)
 
 	try {
 		if (req.file) {
@@ -22,20 +22,23 @@ export const createBlog = async (
 				blogCoverImgUrl,
 			});
 
-            // console.log(result)
+			// console.log(result)
 
 			res.json({
 				status: 200,
 				message: "Successfully created blog",
+				data: {
+					blogId: result.rows[0].id,
+				},
 			});
 		}
 	} catch (error) {
-        console.log(error)
-        res.json({
-            status: 400,
-            message: "Failed creating blog"
-        })
-    }
+		console.log(error);
+		res.json({
+			status: 400,
+			message: "Failed creating blog",
+		});
+	}
 };
 
 export const getLatestBlogs = async (req: Request, res: Response) => {
@@ -47,4 +50,55 @@ export const getTrendingBlogs = async (req: Request, res: Response) => {
 	res.json({
 		message: "trendings",
 	});
+};
+
+export const getIndividualBlog = async (
+	req: Request<{blogId: string}>,
+	res: Response<ServerResponse<IndividualBlogI>>
+) => {
+	const {blogId} = req.params;
+
+	try {
+		const individualBlog: IndividualBlogI = await getIndividualBlogExec(blogId);
+		res.json({
+			status: 200,
+			message: "Successfully Fetched Blog",
+			data: individualBlog,
+		});
+
+		// console.log(individualBlog)
+	} catch (error) {
+		res.status(400).json({
+			message: "Blog Can't Be Fetched",
+			status: 400,
+		});
+		console.log(error);
+	}
+};
+
+export const createComment = async(
+	req: Request<{blogId: string}, {}, {commenterId: string; comment: string}>,
+	res: Response<ServerResponse<{commentId: string}>>
+) => {
+	const {blogId} = req.params;
+	const {comment, commenterId} = req.body;
+
+	try {
+		const commentId = await createCommentExec(commenterId, blogId, comment)
+		
+		res.json({
+			status: 200,
+			message: "Comment Created Successfully",
+			data: {
+				commentId: commentId
+			}
+		})
+
+	} catch (error) {
+		res.status(400).json({
+			status: 400,
+			message: "Couldn't Post Message"
+		})
+	}
+
 };

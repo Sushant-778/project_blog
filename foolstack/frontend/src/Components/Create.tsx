@@ -1,10 +1,11 @@
 import {useRef, useState, type MouseEvent} from "react";
-import {Link} from "react-router";
+import {Link, useNavigate} from "react-router";
 import {createBlog} from "../apis/blogApis";
 import {useUser} from "../ContextProvider/UserContext";
 
 const Create = () => {
 	const {user} = useUser();
+	const navigate = useNavigate();
 
 	const contentRef = useRef<HTMLDivElement>(null);
 	const [content, setContent] = useState("");
@@ -104,7 +105,7 @@ const Create = () => {
 
 		try {
 			const res = await createBlog(blogFormData);
-			console.log(res.data.message);
+			const {blogId} = res.data.data
 			alert(res.data.message);
 
 			// clean up user data
@@ -116,7 +117,8 @@ const Create = () => {
 				contentRef.current.innerHTML = "";
 			}
 
-			// optional: we can navigate to user by navigate()
+			// navigating user to created blog
+			navigate(`/blog/${blogId}`)
 		} catch (error) {
 			alert(error)
 			// console.log(error);

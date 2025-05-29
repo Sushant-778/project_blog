@@ -8,6 +8,10 @@ import {
 
 const router = Router();
 
+/**
+ * @current_route /auth
+ */
+
 router.get("/", getUserController);
 // router.post("/", createUserController);
 router.put("/", updateLinksController);

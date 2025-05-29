@@ -7,7 +7,7 @@ const GeneralPost = () => {
 	console.log("Trending?", trending);
 
 	return (
-		<main className="w-[60dvw]">
+		<main className="w-[60dvw] m-auto">
 			<article className="mb-15 flex flex-col justify-center  ">
 				<header className="text-dim-text">
 					<h1 className="font-raleway text-3xl font-bold text-heading-text leading-8 mb-1">

@@ -11,6 +11,7 @@ import {GoogleOAuthProvider} from "@react-oauth/google";
 import {UserProvider} from "./ContextProvider/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import Profile from "./Components/Profile";
+import IndivialBlog from "./Components/IndividualBlog";
 
 // for Pages with regular header
 const HeaderLayout = () => (
@@ -33,6 +34,13 @@ const router = createBrowserRouter([
 	{
 		element: <HeaderLayout />, // Header included
 		children: [
+			{
+				path: "/blog/:blogId",
+				element: (
+					<IndivialBlog />
+				)
+			},
+
 			{
 				path: "/create",
 				element: (
