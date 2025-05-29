@@ -45,3 +45,10 @@ export type ServerResponse<T> = {
     message: string;
     data?: T;
 }
+
+export interface CreateBlogI {
+    title: string,
+    description: string,
+    author_name: string,
+    author_id: string
+}

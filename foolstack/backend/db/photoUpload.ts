@@ -55,7 +55,10 @@ cloudinary.config({
 });
 
 // email to uniquely identify the user photo
-const uploadProfileFromGoogleImgSrc = async (pictureUrl: string, email:string) => {
+const uploadProfileFromGoogleImgSrc = async (
+	pictureUrl: string,
+	email: string
+) => {
 	try {
 		const uploadResponse = await cloudinary.uploader.upload(pictureUrl, {
 			folder: "profile_pictures", // optional folder
@@ -70,12 +73,39 @@ const uploadProfileFromGoogleImgSrc = async (pictureUrl: string, email:string) =
 	}
 };
 
+const uploadBlogCoverImgFile = async (
+	blogCoverImg: Express.Multer.File
+): Promise<string> => {
+	try {
+		const cloudinaryUrl = await new Promise<string>((resolve, reject) => {
+			const stream = cloudinary.uploader.upload_stream(
+				{
+					folder: "blog_cover_img",
+					overwrite: true,
+					// not giving public_id as cloudinary will auto gen
+				},
+				(err, result) => {
+					if (err || !result) {
+						reject("Couldn't Save Blog Cover Img");
+					} else {
+						resolve(result.secure_url); // the Cloudinary image URL
+					}
+				}
+			);
+
+			stream.end(blogCoverImg.buffer); // send the image buffer to cloudinary
+		});
+
+		return cloudinaryUrl;
+	} catch (error) {
+		console.error("Cloudinary Upload Error:", error);
+		throw new Error("Failed to upload Blog Cover Image");
+	}
+};
+
 // Optional: for future purposes
 // const uploadProfileFromBlob = async (picture: Blob, email: string) => {
 
 // }
 
-
-export {
-	uploadProfileFromGoogleImgSrc
-}
+export {uploadProfileFromGoogleImgSrc, uploadBlogCoverImgFile};

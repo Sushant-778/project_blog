@@ -21,16 +21,16 @@ const Header = () => {
 					className="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out ">
 					Home
 				</Link>
-				<a
-					href="/posts"
+				<Link
+					to="/posts"
 					className="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">
 					Latest
-				</a>
-				<a
-					href="/posts/trending"
+				</Link>
+				<Link
+					to="/posts/trending"
 					className="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">
 					Trending
-				</a>
+				</Link>
 			</div>
 		</nav>
 	);

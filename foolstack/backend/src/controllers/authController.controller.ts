@@ -10,7 +10,7 @@ import axios from "axios";
 import {
 	checkUserExistAndGetDetailByEmail,
 	createUser,
-} from "../../db/dbQueries";
+} from "../../db/dbUserQueries";
 import {uploadProfileFromGoogleImgSrc} from "../../db/photoUpload";
 
 const getUserController = async (req: Request, res: Response) => {

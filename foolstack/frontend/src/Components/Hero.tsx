@@ -1,6 +1,9 @@
-import { Link } from "react-router";
+import {Link} from "react-router";
+import {useUser} from "../ContextProvider/UserContext";
 
 const Hero = () => {
+	const {setUser} = useUser();
+
 	return (
 		<>
 			<nav className="w-full p-4 flex justify-between h-40">
@@ -43,11 +46,17 @@ const Hero = () => {
 								<hr />
 								<Link
 									to="/login"
+									onClick={() => {
+										setUser(null);
+									}}
 									className="mt-2 p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">
 									Add a different account
 								</Link>
 								<Link
 									to="/login"
+									onClick={() => {
+										setUser(null);
+									}}
 									className=" p-2 rounded-sm text-left text-xs hover:bg-[#6494edd5]">
 									Sign out
 								</Link>
