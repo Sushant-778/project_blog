@@ -10,6 +10,7 @@ import "./App.css";
 import {GoogleOAuthProvider} from "@react-oauth/google";
 import {UserProvider} from "./ContextProvider/UserContext";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Profile from "./Components/Profile";
 
 // for Pages with regular header
 const HeaderLayout = () => (
@@ -65,6 +66,14 @@ const router = createBrowserRouter([
 						),
 					},
 				],
+			},
+			{
+				path: "/profile/:userId",
+				element: (
+					<ProtectedRoute>
+						<Profile />
+					</ProtectedRoute>
+				),
 			},
 		],
 	},
