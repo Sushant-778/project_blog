@@ -13,6 +13,10 @@ const IndivialBlog = () => {
 	const {blogId} = useParams<{blogId: string}>();
 
 	const [vote, setVote] = useState<VoteType>(null);
+	const [totalVote, setTotalVote] = useState({
+		upvote: 0,
+		downvote: 0,
+	});
 
 	const {user} = useUser();
 
@@ -45,35 +49,90 @@ const IndivialBlog = () => {
 			if (blog?.id && user?.userId) {
 				// vote is still 1 step behind so, it's previous vote
 				await updateVote(blog.id, user.userId, userVote, vote);
+				setVote((prev) => (prev == userVote ? null : userVote));
+				
+				switch(vote){
+					case null:
+						
+						break
+					case "upvote":
+						break
+					case "downvote":
+						break
+				}
 			}
-			setVote((prev) => (prev == userVote ? null : userVote));
 		} catch (error) {
-			console.log(error)
+			console.log(error);
 		}
 	};
 
 	// console.log(blogId);
 
+	// useEffect(() => {
+	// 	const fetchFunction = async () => {
+	// 		try {
+	// 			const res = await getIndividualBlog(blogId!);
+	// 			const {data: blogData} = res.data;
+
+	// 			console.log(blogData);
+
+	// 			// for testing loader
+	// 			// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	// 			await new Promise<void>((resolve, _) => {
+	// 				setTimeout(() => {
+	// 					resolve();
+	// 				}, 2000);
+	// 			});
+
+	// 			if (blogData) {
+	// 				setBlog(blogData);
+	// 				console.log(blogData)
+	// 			} else {
+	// 				alert("No Blog Data Found");
+	// 			}
+	// 		} catch (error) {
+	// 			console.log(error);
+	// 		} finally {
+	// 			setLoading(false);
+	// 		}
+	// 	};
+
+	// 	fetchFunction();
+
+	// 	return () => {
+	// 		if (descriptionRef.current && blog) {
+	// 			descriptionRef.current.innerHTML = blog.description;
+	// 		}
+	// 	};
+	// }, [blog,blogId]);
+
 	useEffect(() => {
 		const fetchFunction = async () => {
 			try {
-				const res = await getIndividualBlog(blogId!);
-				const {data: blogData} = res.data;
+				if (blogId && user?.userId) {
+					const res = await getIndividualBlog(blogId!, user?.userId);
+					const {data: blogData} = res.data;
 
-				console.log(blogData);
+					// await new Promise<void>((resolve) => {
+					// 	setTimeout(() => {
+					// 		resolve();
+					// 	}, 2000);
+					// });
 
-				// for testing loader
-				// eslint-disable-next-line @typescript-eslint/no-unused-vars
-				await new Promise<void>((resolve, _) => {
-					setTimeout(() => {
-						resolve();
-					}, 1000);
-				});
+					if (blogData) {
+						setBlog(blogData);
+						setVote(blogData.user_vote_type);
 
-				if (blogData) {
-					setBlog(blogData);
-				} else {
-					alert("No Blog Data Found");
+						setTotalVote({
+							upvote: blogData.upvotes,
+							downvote: blogData.downvotes,
+						});
+						if (descriptionRef.current) {
+							descriptionRef.current.innerHTML = blogData.description;
+						}
+					} else {
+						alert("No Blog Data Found");
+					}
 				}
 			} catch (error) {
 				console.log(error);
@@ -83,13 +142,7 @@ const IndivialBlog = () => {
 		};
 
 		fetchFunction();
-
-		return () => {
-			if (descriptionRef.current && blog) {
-				descriptionRef.current.innerHTML = blog.description;
-			}
-		};
-	}, [blog, blogId]);
+	}, [blogId]); // 👈 Only depends on blogId
 
 	if (loading) return <Loading />;
 	else if (!loading && !blog) return "Blog Not Found";
@@ -147,7 +200,7 @@ const IndivialBlog = () => {
 						/>
 					</button>
 					<span className="text-[#3b3b3f] font-semibold">
-						{vote == "upvote" ? blog?.upvotes + 1 : blog?.upvotes}
+						{totalVote.upvote}
 					</span>
 				</div>
 				<div
@@ -165,7 +218,7 @@ const IndivialBlog = () => {
 						/>
 					</button>
 					<span className="text-[#3b3b3f] font-semibold">
-						{vote == "downvote" ? blog?.downvotes + 1 : blog?.downvotes}
+						{totalVote.downvote}
 					</span>
 				</div>
 			</section>
@@ -173,7 +226,9 @@ const IndivialBlog = () => {
 			<section
 				className="h-50 
                     flex justify-between gap-5 ">
-				{blog?.comments && <VeryRecentComment commentObj={blog.comments[0]} />}
+				{blog?.comments[0].comment && (
+					<VeryRecentComment commentObj={blog.comments[0]} />
+				)}
 
 				<div className="f-col justify-between gap-1 | w-[50%] mx-auto">
 					<textarea

@@ -22,7 +22,6 @@ type UserDataRes = {
 	};
 };
 
-
 export type ServerResponse<T> = {
 	status: number;
 	message: string;
@@ -44,13 +43,13 @@ type Reply = {
 	replier: UserInfo;
 };
 
-export interface CommentI  {
+export interface CommentI {
 	id: string | null;
 	comment: string | null;
 	created_at: Date; // or Date
 	user: UserInfo | null;
 	replies: Reply[] | null;
-};
+}
 
 interface BlogResI {
 	id: string;
@@ -63,10 +62,17 @@ interface BlogResI {
 	updated_at: string; // or Date
 	upvotes: number;
 	downvotes: number;
+	user_vote_type: VoteType;
 	comments: CommentI[];
 }
 // --> Blog Response Type Complete
 
 type VoteType = "upvote" | "downvote" | null;
 
-export type {GoogleLoginSuccess, GoogleLoginError, UserDataRes, BlogResI, VoteType};
+export type {
+	GoogleLoginSuccess,
+	GoogleLoginError,
+	UserDataRes,
+	BlogResI,
+	VoteType,
+};

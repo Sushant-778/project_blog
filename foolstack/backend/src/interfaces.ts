@@ -89,5 +89,6 @@ export interface IndividualBlogI {
 	updated_at: string; // or Date
 	upvotes: number;
 	downvotes: number;
+	user_vote_type: VoteType;
 	comments: Comment[];
 }

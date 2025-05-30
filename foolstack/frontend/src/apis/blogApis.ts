@@ -15,9 +15,10 @@ const createBlog = async (
 };
 
 const getIndividualBlog = async (
-	blogId: string
+	blogId: string,
+	userId: string,
 ): Promise<AxiosResponse<ServerResponse<BlogResI>>> => {
-	return await api.get(`/blogs/${blogId}`);
+	return await api.get(`/blogs/${blogId}/${userId}`);
 };
 
 const postComment = async (

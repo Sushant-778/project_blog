@@ -18,7 +18,7 @@ const router = Router();
 router.post("/", upload.single("blog_cover_img") ,createBlog);
 router.get("/", getLatestBlogs);
 router.get("/trending", getTrendingBlogs);
-router.get('/:blogId', getIndividualBlog)
+router.get('/:blogId/:userId', getIndividualBlog)
 router.post('/:blogId/comment', createComment)
 router.patch('/:blogId/vote', updateVote)
 

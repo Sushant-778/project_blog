@@ -1,5 +1,10 @@
 import {Request, Response} from "express";
-import {CreateBlogI, IndividualBlogI, ServerResponse, VoteType} from "../interfaces";
+import {
+	CreateBlogI,
+	IndividualBlogI,
+	ServerResponse,
+	VoteType,
+} from "../interfaces";
 import {uploadBlogCoverImgFile} from "../../db/photoUpload";
 import {
 	createBlogExec,
@@ -58,13 +63,13 @@ export const getTrendingBlogs = async (req: Request, res: Response) => {
 };
 
 export const getIndividualBlog = async (
-	req: Request<{blogId: string}>,
+	req: Request<{blogId: string, userId: string}>,
 	res: Response<ServerResponse<IndividualBlogI>>
 ) => {
-	const {blogId} = req.params;
+	const {blogId, userId} = req.params;
 
 	try {
-		const individualBlog: IndividualBlogI = await getIndividualBlogExec(blogId);
+		const individualBlog: IndividualBlogI = await getIndividualBlogExec(blogId, userId);
 		res.json({
 			status: 200,
 			message: "Successfully Fetched Blog",
@@ -110,7 +115,7 @@ export const updateVote = async (
 	req: Request<
 		{blogId: string},
 		{},
-		{userId: string; vote: VoteType, prevVote: VoteType}
+		{userId: string; vote: VoteType; prevVote: VoteType}
 	>,
 	res: Response<ServerResponse<{commentId: string}>>
 ) => {
@@ -118,14 +123,11 @@ export const updateVote = async (
 	const {userId, vote, prevVote} = req.body;
 
 	try {
-		const commentId = await updateVoteExec(userId, blogId, vote, prevVote)
+		const voteId = await updateVoteExec(userId, blogId, vote, prevVote);
 
 		res.json({
 			status: 200,
-			message: "Comment Created Successfully",
-			data: {
-				commentId: commentId,
-			},
+			message: `${voteId? "Voted ": "Vote Removed"} Successfully`,
 		});
 	} catch (error) {
 		res.status(400).json({

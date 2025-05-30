@@ -23,70 +23,141 @@ const createBlogExec = async (
 	return result;
 };
 
-const getIndividualBlogExec = async (blogId: string) => {
+const getIndividualBlogExec = async (blogId: string, userId: string) => {
 	try {
+		// 		const result = await pool.query(
+		// 			`WITH selected_blog AS (
+		// 			SELECT * FROM blogs WHERE id = $1
+		// 			),
+		// 			top_comments AS (
+		// 			SELECT * FROM comments
+		// 			WHERE blog_id = $1
+		// 			ORDER BY created_at DESC
+		// 			LIMIT 5
+		// 			),
+		// 			comment_replies AS (
+		// 			SELECT * FROM replies
+		// 			WHERE comment_id IN (SELECT id FROM top_comments)
+		// 			)
+		// 			SELECT
+		// 			sb.id,
+		// 			sb.author_id,
+		// 			sb.author_name,
+		// 			sb.title,
+		// 			sb.blog_image_url,
+		// 			sb.description,
+		// 			sb.created_at,
+		// 			sb.updated_at,
+		// 			sb.upvotes,
+		// 			sb.downvotes,
+		// 			json_agg(
+		// 				json_build_object(
+		// 				'id', c.id,
+		// 				'comment', c.comment,
+		// 				'created_at', c.created_at,
+		// 				'user', json_build_object(
+		// 					'id', u.id,
+		// 					'name', u.username,
+		// 					'image', u.user_img_src
+		// 				),
+		// 				'replies', (
+		// 					SELECT json_agg(
+		// 					json_build_object(
+		// 						'id', r.id,
+		// 						'reply_message', r.reply_message,
+		// 						'created_at', r.created_at,
+		// 						'replier', json_build_object(
+		// 						'id', ru.id,
+		// 						'name', ru.username,
+		// 						'image', ru.user_img_src
+		// 						)
+		// 					)
+		// 					)
+		// 					FROM comment_replies r
+		// 					JOIN users ru ON ru.id = r.replier_id
+		// 					WHERE r.comment_id = c.id
+		// 				)
+		// 				)
+		// 			) AS comments
+		// 			FROM selected_blog sb
+		// 			LEFT JOIN top_comments c ON sb.id = c.blog_id
+		// 			LEFT JOIN users u ON u.id = c.user_id
+		// 			GROUP BY
+		// 			sb.id, sb.author_id, sb.author_name, sb.title, sb.blog_image_url,
+		// 			sb.description, sb.created_at, sb.updated_at, sb.upvotes, sb.downvotes;
+		// `,
+		// 	[blogId]
+		// );
+
 		const result = await pool.query(
-			`WITH selected_blog AS (
-			SELECT * FROM blogs WHERE id = $1
-			),
-			top_comments AS (
-			SELECT * FROM comments
-			WHERE blog_id = $1
-			ORDER BY created_at DESC
-			LIMIT 5
-			),
-			comment_replies AS (
-			SELECT * FROM replies
-			WHERE comment_id IN (SELECT id FROM top_comments)
-			)
-			SELECT 
-			sb.id,
-			sb.author_id,
-			sb.author_name,
-			sb.title,
-			sb.blog_image_url,
-			sb.description,
-			sb.created_at,
-			sb.updated_at,
-			sb.upvotes,
-			sb.downvotes,
-			json_agg(
-				json_build_object(
-				'id', c.id,
-				'comment', c.comment,
-				'created_at', c.created_at,
-				'user', json_build_object(
-					'id', u.id,
-					'name', u.username,
-					'image', u.user_img_src
-				),
-				'replies', (
-					SELECT json_agg(
-					json_build_object(
-						'id', r.id,
-						'reply_message', r.reply_message,
-						'created_at', r.created_at,
-						'replier', json_build_object(
-						'id', ru.id,
-						'name', ru.username,
-						'image', ru.user_img_src
-						)
-					)
-					)
-					FROM comment_replies r
-					JOIN users ru ON ru.id = r.replier_id
-					WHERE r.comment_id = c.id
-				)
-				)
-			) AS comments
-			FROM selected_blog sb
-			LEFT JOIN top_comments c ON sb.id = c.blog_id
-			LEFT JOIN users u ON u.id = c.user_id
-			GROUP BY 
-			sb.id, sb.author_id, sb.author_name, sb.title, sb.blog_image_url,
-			sb.description, sb.created_at, sb.updated_at, sb.upvotes, sb.downvotes;
-`,
-			[blogId]
+			`
+  WITH selected_blog AS (
+    SELECT * FROM blogs WHERE id = $1
+  ),
+  top_comments AS (
+    SELECT * FROM comments
+    WHERE blog_id = $1
+    ORDER BY created_at DESC
+    LIMIT 5
+  ),
+  comment_replies AS (
+    SELECT * FROM replies
+    WHERE comment_id IN (SELECT id FROM top_comments)
+  ),
+  user_vote AS (
+    SELECT vote_type FROM blog_votes
+    WHERE blog_id = $1 AND user_id = $2
+    LIMIT 1
+  )
+  SELECT 
+    sb.id,
+    sb.author_id,
+    sb.author_name,
+    sb.title,
+    sb.blog_image_url,
+    sb.description,
+    sb.created_at,
+    sb.updated_at,
+    sb.upvotes,
+    sb.downvotes,
+    (SELECT vote_type FROM user_vote) AS user_vote_type,
+    json_agg(
+      json_build_object(
+        'id', c.id,
+        'comment', c.comment,
+        'created_at', c.created_at,
+        'user', json_build_object(
+          'id', u.id,
+          'name', u.username,
+          'image', u.user_img_src
+        ),
+        'replies', (
+          SELECT json_agg(
+            json_build_object(
+              'id', r.id,
+              'reply_message', r.reply_message,
+              'created_at', r.created_at,
+              'replier', json_build_object(
+                'id', ru.id,
+                'name', ru.username,
+                'image', ru.user_img_src
+              )
+            )
+          )
+          FROM comment_replies r
+          JOIN users ru ON ru.id = r.replier_id
+          WHERE r.comment_id = c.id
+        )
+      )
+    ) AS comments
+  FROM selected_blog sb
+  LEFT JOIN top_comments c ON sb.id = c.blog_id
+  LEFT JOIN users u ON u.id = c.user_id
+  GROUP BY 
+    sb.id, sb.author_id, sb.author_name, sb.title, sb.blog_image_url,
+    sb.description, sb.created_at, sb.updated_at, sb.upvotes, sb.downvotes;
+  `,
+			[blogId, userId]
 		);
 
 		const blogData = result.rows[0];
@@ -128,31 +199,82 @@ const updateVoteExec = async (
 	vote: VoteType,
 	prevVote: VoteType
 ) => {
-	// logic: prevVote == null ? 
-	// "increment in upvote/downvote(blog) and insert in blog_votes" : 
+	// logic: prevVote == null ?
+	// "increment in upvote/downvote(blog) and insert in blog_votes" :
 	// "Decrement from prevVote type(blog) and delete in blog_vote using userId [we ain't need voteId as 1 vote per userId]"
 
 	const client = await pool.connect(); // for transaction
 	try {
 		await client.query("BEGIN");
 
-		const result: QueryResult<{id: string}> = await client.query(
-			`
-			INSERT INTO blog_votes (blog_id, user_id, vote_type)
-			VALUES ($1, $2, $3)
-			RETURNING id;`,
-			[blogId, userId, vote]
-		);
+		let voteId: string | null = null;
 
-		// console.log(result)
+		if (prevVote === null) {
+			// New vote
+			const result = await client.query(
+				`INSERT INTO blog_votes (blog_id, user_id, vote_type)
+				 VALUES ($1, $2, $3)
+				 RETURNING id;`,
+				[blogId, userId, vote]
+			);
 
-		const voteId = result.rows[0].id;
-		// console.log(commentId);
+			await client.query(
+				`UPDATE blogs SET ${vote === "upvote" ? "upvotes" : "downvotes"} = ${
+					vote === "upvote" ? "upvotes" : "downvotes"
+				} + 1 WHERE id = $1`,
+				[blogId]
+			);
 
+			voteId = result.rows[0].id;
+		} else if (prevVote === vote) {
+			// User is toggling same vote → remove it
+			await client.query(
+				`DELETE FROM blog_votes WHERE blog_id = $1 AND user_id = $2`,
+				[blogId, userId]
+			);
+
+			await client.query(
+				`UPDATE blogs SET ${vote === "upvote" ? "upvotes" : "downvotes"} = ${
+					vote === "upvote" ? "upvotes" : "downvotes"
+				} - 1 WHERE id = $1`,
+				[blogId]
+			);
+		} else {
+			// Vote type changed (upvote <-> downvote)
+			await client.query(
+				`UPDATE blog_votes SET vote_type = $1 WHERE blog_id = $2 AND user_id = $3`,
+				[vote, blogId, userId]
+			);
+
+			// Decrement previous vote type
+			await client.query(
+				`UPDATE blogs SET ${
+					prevVote === "upvote" ? "upvotes" : "downvotes"
+				} = ${
+					prevVote === "upvote" ? "upvotes" : "downvotes"
+				} - 1 WHERE id = $1`,
+				[blogId]
+			);
+
+			// Increment new vote type
+			await client.query(
+				`UPDATE blogs SET ${vote === "upvote" ? "upvotes" : "downvotes"} = ${
+					vote === "upvote" ? "upvotes" : "downvotes"
+				} + 1 WHERE id = $1`,
+				[blogId]
+			);
+
+			voteId = null; // No new insert
+		}
+
+		await client.query("COMMIT");
 		return voteId;
 	} catch (error) {
-		console.log(error);
+		await client.query("ROLLBACK");
+		console.error("Vote update failed:", error);
 		throw error;
+	} finally {
+		client.release();
 	}
 };
 
