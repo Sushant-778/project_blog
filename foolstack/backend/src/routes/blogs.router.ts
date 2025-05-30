@@ -4,6 +4,7 @@ import {
 	createComment,
 	getIndividualBlog,
 	getLatestBlogs,
+	getTrendingAndLatestBlog,
 	getTrendingBlogs,
 	updateVote,
 } from "../controllers/blogsController.controller";
@@ -15,8 +16,9 @@ const router = Router();
  * @current_route   /blogs
  */
 
+router.get("/", getTrendingAndLatestBlog);
 router.post("/", upload.single("blog_cover_img") ,createBlog);
-router.get("/", getLatestBlogs);
+router.get("/latest", getLatestBlogs);
 router.get("/trending", getTrendingBlogs);
 router.get('/:blogId/:userId', getIndividualBlog)
 router.post('/:blogId/comment', createComment)

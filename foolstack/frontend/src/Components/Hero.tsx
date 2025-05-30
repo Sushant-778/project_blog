@@ -1,8 +1,25 @@
 import {Link} from "react-router";
 import {useUser} from "../ContextProvider/UserContext";
+import { useEffect } from "react";
+import { getTrendingAndLatestBlog } from "../apis/blogApis";
 
 const Hero = () => {
 	const {setUser} = useUser();
+	
+
+
+	useEffect(()=> {
+		const fetchTrendingAndLatest= async() => {
+			try {
+				const res = await getTrendingAndLatestBlog();
+				console.log(res)
+			} catch (error) {
+				console.log(error)
+			}
+		}
+
+		fetchTrendingAndLatest();
+	}, [])
 
 	return (
 		<>

@@ -16,7 +16,7 @@ const createBlog = async (
 
 const getIndividualBlog = async (
 	blogId: string,
-	userId: string,
+	userId: string
 ): Promise<AxiosResponse<ServerResponse<BlogResI>>> => {
 	return await api.get(`/blogs/${blogId}/${userId}`);
 };
@@ -45,4 +45,16 @@ const updateVote = async (
 	});
 };
 
-export {createBlog, getIndividualBlog, postComment, updateVote};
+const getTrendingAndLatestBlog = async (): Promise<
+	AxiosResponse<ServerResponse<BlogResI[]>>
+> => {
+	return await api.get("/");
+};
+
+export {
+	createBlog,
+	getIndividualBlog,
+	postComment,
+	updateVote,
+	getTrendingAndLatestBlog,
+};

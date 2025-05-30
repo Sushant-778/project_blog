@@ -62,6 +62,12 @@ export const getTrendingBlogs = async (req: Request, res: Response) => {
 	});
 };
 
+export const getTrendingAndLatestBlog = async(req: Request, res: Response) => {
+	res.json({
+		message: "d"
+	})
+}
+
 export const getIndividualBlog = async (
 	req: Request<{blogId: string, userId: string}>,
 	res: Response<ServerResponse<IndividualBlogI>>
