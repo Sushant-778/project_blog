@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router";
 import { getIndividualBlog, postComment, updateVote } from "../apis/blogApis";
-import type { BlogResI, VoteType } from "../interface";
+import type { IndividualBlogI, VoteType } from "../interface";
 import Loading from "./UI/Loading";
 import Comment from "./SubComponents/Comment";
 import { useUser } from "../ContextProvider/UserContext";
 import VeryRecentComment from "./SubComponents/VeryRecentComment";
 
 const IndivialBlog = () => {
-  const [blog, setBlog] = useState<BlogResI>();
+  const [blog, setBlog] = useState<IndividualBlogI>();
   const [loading, setLoading] = useState(true);
   const { blogId } = useParams<{ blogId: string }>();
 

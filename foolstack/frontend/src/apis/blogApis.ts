@@ -1,6 +1,6 @@
 import type {AxiosResponse} from "axios";
 import {api} from "./axiosSetup";
-import type {BlogResI, ServerResponse, VoteType} from "../interface";
+import type {IndividualBlogI, RawBlogI, ServerResponse, VoteType} from "../interface";
 
 const createBlog = async (
 	blogData: FormData
@@ -17,7 +17,7 @@ const createBlog = async (
 const getIndividualBlog = async (
 	blogId: string,
 	userId: string
-): Promise<AxiosResponse<ServerResponse<BlogResI>>> => {
+): Promise<AxiosResponse<ServerResponse<IndividualBlogI>>> => {
 	return await api.get(`/blogs/${blogId}/${userId}`);
 };
 
@@ -46,9 +46,12 @@ const updateVote = async (
 };
 
 const getTrendingAndLatestBlog = async (): Promise<
-	AxiosResponse<ServerResponse<BlogResI[]>>
+	AxiosResponse<ServerResponse<{
+		trending: RawBlogI[],
+		latest: RawBlogI[]
+	}>>
 > => {
-	return await api.get("/");
+	return await api.get("/blogs");
 };
 
 export {
