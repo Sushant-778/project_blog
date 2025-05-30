@@ -5,6 +5,7 @@ import {
 	getIndividualBlog,
 	getLatestBlogs,
 	getTrendingBlogs,
+	updateVote,
 } from "../controllers/blogsController.controller";
 import upload from "../../middleware/upload";
 
@@ -19,5 +20,6 @@ router.get("/", getLatestBlogs);
 router.get("/trending", getTrendingBlogs);
 router.get('/:blogId', getIndividualBlog)
 router.post('/:blogId/comment', createComment)
+router.patch('/:blogId/vote', updateVote)
 
 export default router;

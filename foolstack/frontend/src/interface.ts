@@ -65,7 +65,8 @@ interface BlogResI {
 	downvotes: number;
 	comments: CommentI[];
 }
-
 // --> Blog Response Type Complete
 
-export type {GoogleLoginSuccess, GoogleLoginError, UserDataRes, BlogResI};
+type VoteType = "upvote" | "downvote" | null;
+
+export type {GoogleLoginSuccess, GoogleLoginError, UserDataRes, BlogResI, VoteType};

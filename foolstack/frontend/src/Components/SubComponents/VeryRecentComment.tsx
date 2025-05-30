@@ -1,39 +1,3 @@
-// import type{ CommentI } from "../../interface";
-
-// const VeryRecentComment = ({commentObj}: {commentObj: CommentI}) => {
-
-//     const {comment, user, created_at } = commentObj;
-
-// 	return (
-// 		<div className="min-h-28 max-h-40 h-fit w-[50%] flex flex-col justify-start gap-3 py-4 px-2 rounded-sm bg-[#3b3b3f] text-dim-text text-sm my-auto overflow-hidden">
-//             <p>{created_at}</p>
-// 			<hr className="border-cornflowerblue" />
-// 			<div className="h-[80%] flex gap-2 font-raleway">
-// 				<div className="">
-// 					{" "}
-// 					<img src={user?.image} alt="" className="max-w-12 rounded-full" />
-// 				</div>
-// 				<div className="w-full overflow-y-scroll">
-// 					<h3 className="text-lg text-heading-text">{user?.name}</h3>
-// 					<p className="w-full overflow-hidden">
-//                         {/* {comment} */}
-
-//                         jklasdkf
-//                         adsf;adsf
-//                         adsfk;lasdf
-//                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita consectetur quod optio voluptates incidunt, perferendis nemo nam possimus dignissimos hic ex necessitatibus ipsum eos, error nihil perspiciatis dolores reprehenderit obcaecati.
-//                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita consectetur quod optio voluptates incidunt, perferendis nemo nam possimus dignissimos hic ex necessitatibus ipsum eos, error nihil perspiciatis dolores reprehenderit obcaecati.
-//                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita consectetur quod optio voluptates incidunt, perferendis nemo nam possimus dignissimos hic ex necessitatibus ipsum eos, error nihil perspiciatis dolores reprehenderit obcaecati.
-//                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita consectetur quod optio voluptates incidunt, perferendis nemo nam possimus dignissimos hic ex necessitatibus ipsum eos, error nihil perspiciatis dolores reprehenderit obcaecati.
-// 					</p>
-// 				</div>
-// 			</div>
-// 		</div>
-// 	);
-// };
-
-// export default VeryRecentComment;
-
 import type {CommentI} from "../../interface";
 
 const VeryRecentComment = ({commentObj}: {commentObj: CommentI}) => {
@@ -60,7 +24,7 @@ const VeryRecentComment = ({commentObj}: {commentObj: CommentI}) => {
 				</div>
 				<div className="f-col | ">
 					<h3 className="text-lg text-heading-text">{user?.name}</h3>
-					<div className="w-full max-h-20 overflow-y-auto pr-2">
+					<div className="w-full text-medium max-h-20 overflow-y-auto pr-2">
 						<p className="whitespace-pre-wrap pb-5">
 							{comment}
 							Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus

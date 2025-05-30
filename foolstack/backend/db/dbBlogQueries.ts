@@ -1,6 +1,6 @@
 import {QueryResult} from "pg";
 import {Database} from "./db.config";
-import {CreateBlogI, userI} from "../src/interfaces";
+import {CreateBlogI, userI, VoteType} from "../src/interfaces";
 // gettin db pool
 const pool = Database.getInstance().dbConnection;
 
@@ -102,11 +102,12 @@ const createCommentExec = async (
 	comment: string
 ) => {
 	try {
-		const result: QueryResult<{id: string}> = await pool.query(`
+		const result: QueryResult<{id: string}> = await pool.query(
+			`
 			INSERT INTO comments (blog_id, user_id, comment)
 			VALUES ($1, $2, $3)
 			RETURNING *;`,
-		[blogId, commenterId, comment]
+			[blogId, commenterId, comment]
 		);
 
 		// console.log(result)
@@ -116,9 +117,48 @@ const createCommentExec = async (
 
 		return commentId;
 	} catch (error) {
-		console.log(error)
+		console.log(error);
 		throw error;
 	}
 };
 
-export {createBlogExec, getIndividualBlogExec, createCommentExec};
+const updateVoteExec = async (
+	userId: string,
+	blogId: string,
+	vote: VoteType,
+	prevVote: VoteType
+) => {
+	// logic: prevVote == null ? 
+	// "increment in upvote/downvote(blog) and insert in blog_votes" : 
+	// "Decrement from prevVote type(blog) and delete in blog_vote using userId [we ain't need voteId as 1 vote per userId]"
+
+	const client = await pool.connect(); // for transaction
+	try {
+		await client.query("BEGIN");
+
+		const result: QueryResult<{id: string}> = await client.query(
+			`
+			INSERT INTO blog_votes (blog_id, user_id, vote_type)
+			VALUES ($1, $2, $3)
+			RETURNING id;`,
+			[blogId, userId, vote]
+		);
+
+		// console.log(result)
+
+		const voteId = result.rows[0].id;
+		// console.log(commentId);
+
+		return voteId;
+	} catch (error) {
+		console.log(error);
+		throw error;
+	}
+};
+
+export {
+	createBlogExec,
+	getIndividualBlogExec,
+	createCommentExec,
+	updateVoteExec,
+};

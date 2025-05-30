@@ -1,7 +1,7 @@
 import {useEffect, useRef, useState} from "react";
 import {useParams} from "react-router";
-import {getIndividualBlog, postComment} from "../apis/blogApis";
-import type {BlogResI} from "../interface";
+import {getIndividualBlog, postComment, updateVote} from "../apis/blogApis";
+import type {BlogResI, VoteType} from "../interface";
 import Loading from "./UI/Loading";
 import Comment from "./SubComponents/Comment";
 import {useUser} from "../ContextProvider/UserContext";
@@ -11,6 +11,8 @@ const IndivialBlog = () => {
 	const [blog, setBlog] = useState<BlogResI>();
 	const [loading, setLoading] = useState(true);
 	const {blogId} = useParams<{blogId: string}>();
+
+	const [vote, setVote] = useState<VoteType>(null);
 
 	const {user} = useUser();
 
@@ -35,6 +37,21 @@ const IndivialBlog = () => {
 		}
 	};
 
+	const handleVote = async (userVote: VoteType) => {
+		// step: sent userVote, prev vote to db
+		// then update current vote to userVote
+
+		try {
+			if (blog?.id && user?.userId) {
+				// vote is still 1 step behind so, it's previous vote
+				await updateVote(blog.id, user.userId, userVote, vote);
+			}
+			setVote((prev) => (prev == userVote ? null : userVote));
+		} catch (error) {
+			console.log(error)
+		}
+	};
+
 	// console.log(blogId);
 
 	useEffect(() => {
@@ -55,10 +72,6 @@ const IndivialBlog = () => {
 
 				if (blogData) {
 					setBlog(blogData);
-
-					if (descriptionRef.current) {
-						descriptionRef.current.innerHTML = blogData.description;
-					}
 				} else {
 					alert("No Blog Data Found");
 				}
@@ -70,22 +83,26 @@ const IndivialBlog = () => {
 		};
 
 		fetchFunction();
-	}, [blogId]);
+
+		return () => {
+			if (descriptionRef.current && blog) {
+				descriptionRef.current.innerHTML = blog.description;
+			}
+		};
+	}, [blog, blogId]);
 
 	if (loading) return <Loading />;
 	else if (!loading && !blog) return "Blog Not Found";
 
 	return (
-		<main className="w-[70dvw] m-auto">
-			<article className="mb-14 flex flex-col justify-center gap-y-4 ">
+		<main className="f-col gap-y-8 | w-[70dvw] m-auto">
+			<article className="flex flex-col justify-center gap-y-4 ">
 				<header className="text-dim-text">
 					<h1 className="font-raleway text-3xl font-bold text-heading-text leading-8 mb-1">
 						{blog?.title} <br />
 					</h1>
-					<h2 className="text-xs font-light  text-dim-text">
-						By {blog?.author_name}
-					</h2>
-					<time className=" text-xs font-light">
+					<h2 className="font-medium  text-dim-text">By {blog?.author_name}</h2>
+					<time className=" text-sm font-medium">
 						{" "}
 						At{" "}
 						{new Date(blog?.created_at || Date.now()).toLocaleString("en-US", {
@@ -111,6 +128,47 @@ const IndivialBlog = () => {
 					className="mt-8 font-raleway text-heading-text text-base leading-6"
 					ref={descriptionRef}></section>
 			</article>
+
+			<section className="relative flex justify-evenly | h-fit w-36 py-2 bg-gray-400  rounded-4xl">
+				<span className="absolute h-[90%] w-0.5 bg-rose-300 left-1/2 top-1/2 -translate-1/2"></span>
+
+				<div
+					onClick={() => handleVote("upvote")}
+					className="h-full center-child cursor-pointer">
+					<button className="rounded-[50%] ">
+						<img
+							src={
+								vote == "upvote"
+									? "/Images/icons8-thick-arrow-pointing-up-96.png"
+									: "/Images/icons8-thick-arrow-pointing-up-96 (2).png"
+							}
+							alt=""
+							className="w-7 cursor-pointer"
+						/>
+					</button>
+					<span className="text-[#3b3b3f] font-semibold">
+						{vote == "upvote" ? blog?.upvotes + 1 : blog?.upvotes}
+					</span>
+				</div>
+				<div
+					onClick={() => handleVote("downvote")}
+					className="h-full center-child cursor-pointer">
+					<button className="ml-2 rounded-[50%]">
+						<img
+							src={
+								vote == "downvote"
+									? "/Images/icons8-thick-arrow-pointing-up-96.png"
+									: "/Images/icons8-thick-arrow-pointing-up-96 (2).png"
+							}
+							alt=""
+							className="w-7 cursor-pointer rotate-[180deg]"
+						/>
+					</button>
+					<span className="text-[#3b3b3f] font-semibold">
+						{vote == "downvote" ? blog?.downvotes + 1 : blog?.downvotes}
+					</span>
+				</div>
+			</section>
 
 			<section
 				className="h-50 
@@ -141,7 +199,11 @@ const IndivialBlog = () => {
 					</div>
 					<div className=" flex  items-center gap-5 h-52">
 						{blog.comments.map((commentObj, idx) =>
-							idx != 0 ? <Comment key={commentObj.id} commentObj={commentObj}/> : <></>
+							idx != 0 ? (
+								<Comment key={commentObj.id} commentObj={commentObj} />
+							) : (
+								<></>
+							)
 						)}
 					</div>
 				</section>

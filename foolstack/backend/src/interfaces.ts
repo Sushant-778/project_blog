@@ -76,6 +76,8 @@ type Comment = {
 	replies: Reply[] | null;
 };
 
+export type VoteType = "upvote" | "downvote";
+
 export interface IndividualBlogI {
 	id: string;
 	author_id: string;

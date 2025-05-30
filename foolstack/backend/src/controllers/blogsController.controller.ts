@@ -1,7 +1,12 @@
 import {Request, Response} from "express";
-import {CreateBlogI, IndividualBlogI, ServerResponse} from "../interfaces";
+import {CreateBlogI, IndividualBlogI, ServerResponse, VoteType} from "../interfaces";
 import {uploadBlogCoverImgFile} from "../../db/photoUpload";
-import {createBlogExec, createCommentExec, getIndividualBlogExec} from "../../db/dbBlogQueries";
+import {
+	createBlogExec,
+	createCommentExec,
+	getIndividualBlogExec,
+	updateVoteExec,
+} from "../../db/dbBlogQueries";
 
 export const createBlog = async (
 	req: Request<{}, {}, CreateBlogI>,
@@ -76,7 +81,7 @@ export const getIndividualBlog = async (
 	}
 };
 
-export const createComment = async(
+export const createComment = async (
 	req: Request<{blogId: string}, {}, {commenterId: string; comment: string}>,
 	res: Response<ServerResponse<{commentId: string}>>
 ) => {
@@ -84,21 +89,48 @@ export const createComment = async(
 	const {comment, commenterId} = req.body;
 
 	try {
-		const commentId = await createCommentExec(commenterId, blogId, comment)
-		
+		const commentId = await createCommentExec(commenterId, blogId, comment);
+
 		res.json({
 			status: 200,
 			message: "Comment Created Successfully",
 			data: {
-				commentId: commentId
-			}
-		})
-
+				commentId: commentId,
+			},
+		});
 	} catch (error) {
 		res.status(400).json({
 			status: 400,
-			message: "Couldn't Post Message"
-		})
+			message: "Couldn't Post Message",
+		});
 	}
+};
 
+export const updateVote = async (
+	req: Request<
+		{blogId: string},
+		{},
+		{userId: string; vote: VoteType, prevVote: VoteType}
+	>,
+	res: Response<ServerResponse<{commentId: string}>>
+) => {
+	const {blogId} = req.params;
+	const {userId, vote, prevVote} = req.body;
+
+	try {
+		const commentId = await updateVoteExec(userId, blogId, vote, prevVote)
+
+		res.json({
+			status: 200,
+			message: "Comment Created Successfully",
+			data: {
+				commentId: commentId,
+			},
+		});
+	} catch (error) {
+		res.status(400).json({
+			status: 400,
+			message: "Couldn't Post Message",
+		});
+	}
 };

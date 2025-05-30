@@ -1,6 +1,6 @@
 import type {AxiosResponse} from "axios";
 import {api} from "./axiosSetup";
-import type {BlogResI, ServerResponse} from "../interface";
+import type {BlogResI, ServerResponse, VoteType} from "../interface";
 
 const createBlog = async (
 	blogData: FormData
@@ -25,11 +25,23 @@ const postComment = async (
 	blogId: string,
 	comment: string
 ): Promise<AxiosResponse<ServerResponse<{commentId: string}>>> => {
-
 	return await api.post(`/blogs/${blogId}/comment`, {
 		commenterId: userId,
-		comment
-	})
+		comment,
+	});
 };
 
-export {createBlog, getIndividualBlog, postComment};
+const updateVote = async (
+	blogId: string,
+	userId: string,
+	vote: VoteType,
+	prevVote: VoteType
+) => {
+	return await api.patch(`/blogs/${blogId}/vote`, {
+		userId,
+		vote,
+		prevVote,
+	});
+};
+
+export {createBlog, getIndividualBlog, postComment, updateVote};
