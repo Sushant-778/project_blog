@@ -22,12 +22,12 @@ const Header = () => {
 					Home
 				</Link>
 				<Link
-					to="/posts"
+					to="/blogs/latest"
 					className="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">
 					Latest
 				</Link>
 				<Link
-					to="/posts/trending"
+					to="/blogs/trending"
 					className="p-1 no-underline hover:border-b-3 hover:border-b-cornflowerblue transition delay-75 hover:-translate-y-0.5 hover:scale-102 ease-in-out">
 					Trending
 				</Link>

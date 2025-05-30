@@ -2,6 +2,7 @@ import {Request, Response} from "express";
 import {
 	CreateBlogI,
 	IndividualBlogI,
+	RawBlogI,
 	ServerResponse,
 	VoteType,
 } from "../interfaces";
@@ -10,6 +11,7 @@ import {
 	createBlogExec,
 	createCommentExec,
 	getIndividualBlogExec,
+	getTrendingAndLatestBlogExec,
 	updateVoteExec,
 } from "../../db/dbBlogQueries";
 
@@ -62,10 +64,25 @@ export const getTrendingBlogs = async (req: Request, res: Response) => {
 	});
 };
 
-export const getTrendingAndLatestBlog = async(req: Request, res: Response) => {
-	res.json({
-		message: "d"
-	})
+export const getTrendingAndLatestBlog = async(req: Request, res: Response<ServerResponse<{
+	trending: RawBlogI[],
+	latest: RawBlogI[]
+}>>) => {
+	try {
+		const trendingAndLatestBlog = await getTrendingAndLatestBlogExec(); 
+
+		res.json({
+			status: 200,
+			message: "Successfully Fetched Blogs",
+			data: trendingAndLatestBlog
+		})
+		
+	} catch (error) {
+		res.status(400).json({
+			status: 400,
+			message: "Error Fetching Blogs"
+		})
+	}
 }
 
 export const getIndividualBlog = async (

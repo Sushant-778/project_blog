@@ -92,3 +92,17 @@ export interface IndividualBlogI {
 	user_vote_type: VoteType;
 	comments: Comment[];
 }
+
+
+export interface RawBlogI {
+  id: string; // UUID
+  author_id: string; // UUID
+  author_name: string | null;
+  title: string;
+  blog_image_url: string | null;
+  description: string;
+  created_at: Date;
+  updated_at: Date;
+  upvotes: number;
+  downvotes: number;
+}

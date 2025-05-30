@@ -1,10 +1,10 @@
 import { useLocation } from "react-router";
 
 const GeneralPost = () => {
-	const location = useLocation();
-	const trending = location.pathname === "/posts/trending"; // 👈 detect from path
+	// const location = useLocation();
+	// const trending = location.pathname === "/posts/trending"; // 👈 detect from path
 
-	console.log("Trending?", trending);
+	// console.log("Trending?", trending);
 
 	return (
 		<main className="w-[60dvw] m-auto">
